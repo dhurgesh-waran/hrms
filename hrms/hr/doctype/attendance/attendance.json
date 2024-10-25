@@ -32,7 +32,8 @@
   "overtime_duration",
   "overtime_type",
   "column_break_idku",
-  "standard_working_hours"
+  "standard_working_hours",
+  "actual_overtime_duration"
  ],
  "fields": [
   {
@@ -213,12 +214,14 @@
    "label": "Overtime"
   },
   {
+   "description": "Based on \"Maximum Overtime Hours Allowed\" in Overtime Type",
    "fieldname": "overtime_duration",
    "fieldtype": "Time",
    "hide_days": 1,
    "label": "Overtime Duration"
   },
   {
+   "fetch_from": "shift.overtime_type",
    "fieldname": "overtime_type",
    "fieldtype": "Link",
    "label": "Overtime Type",
@@ -232,13 +235,19 @@
    "fieldname": "standard_working_hours",
    "fieldtype": "Time",
    "label": "Standard Working Hours"
+  },
+  {
+   "fieldname": "actual_overtime_duration",
+   "fieldtype": "Time",
+   "label": "Actual Overtime Duration",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-ok",
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-14 00:49:14.493086",
+ "modified": "2024-10-25 11:55:43.603778",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Attendance",

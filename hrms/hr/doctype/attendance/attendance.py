@@ -22,6 +22,7 @@ from hrms.hr.utils import (
 	get_holidays_for_employee,
 	validate_active_employee,
 )
+from hrms.payroll.doctype.salary_slip.salary_slip import convert_str_time_to_hours
 
 
 class DuplicateAttendanceError(frappe.ValidationError):
@@ -43,9 +44,21 @@ class Attendance(Document):
 		self.validate_overlapping_shift_attendance()
 		self.validate_employee_status()
 		self.check_leave_record()
+		self.validate_overtime_duration()
 
 	def on_cancel(self):
 		self.unlink_attendance_from_checkins()
+
+	def validate_overtime_duration(self):
+		if self.overtime_type:
+			maximum_overtime_hours = frappe.db.get_value(
+				"Overtime Type", self.overtime_type, "maximum_overtime_hours_allowed"
+			)
+			self.actual_overtime_duration = self.overtime_duration
+			if maximum_overtime_hours:
+				overtime_duration_in_hours = convert_str_time_to_hours(self.overtime_duration)
+				if overtime_duration_in_hours > maximum_overtime_hours:
+					self.overtime_duration = str(maximum_overtime_hours) + ":00:00"
 
 	def validate_attendance_date(self):
 		date_of_joining = frappe.db.get_value("Employee", self.employee, "date_of_joining")
@@ -235,6 +248,27 @@ class Attendance(Document):
 				is_minimizable=True,
 				wide=True,
 			)
+
+
+@frappe.whitelist()
+def get_shift_type(employee, attendance_date):
+	ShiftAssignment = frappe.qb.DocType("Shift Assignment")
+
+	shift_assignment = (
+		frappe.qb.from_(ShiftAssignment)
+		.select(ShiftAssignment.name, ShiftAssignment.shift_type)
+		.where(ShiftAssignment.docstatus == 1)
+		.where(ShiftAssignment.employee == employee)
+		.where(ShiftAssignment.start_date <= attendance_date)
+		.where((ShiftAssignment.end_date >= attendance_date) | (ShiftAssignment.end_date.isnull()))
+		.where(ShiftAssignment.status == "Active")
+	).run(as_dict=1)
+
+	if len(shift_assignment):
+		shift = shift_assignment[0].shift_type
+	else:
+		shift = frappe.db.get_value("Employee", employee, "default_shift")
+	return shift
 
 
 @frappe.whitelist()
