@@ -1689,10 +1689,18 @@ class TestSalarySlip(IntegrationTestCase):
 			create_overtime_slip,
 		)
 		from hrms.hr.doctype.overtime_type.test_overtime_type import create_overtime_type
+		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
 		from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
 
-		employee = make_employee("overtime_calc@salary.slip")
-		salary_structure = make_salary_structure("structure for Overtime 2", "Monthly", employee=employee)
+		setup_shift_type(company="_Test Company")
+
+		employee = make_employee("test_overtime_slipn@example.com")
+		salary_structure = make_salary_structure(
+			"Test Overtime Salary Slip",
+			"Monthly",
+			employee=employee,
+			company="_Test Company",
+		)
 
 		component = [
 			{
@@ -1733,7 +1741,7 @@ class TestSalarySlip(IntegrationTestCase):
 		hourly_wages = daily_wages / 4
 
 		# formula = hourly wages * overtime hours * multiplier
-		overtime_amount = hourly_wages * 2 * overtime_type.standard_multiplier
+		overtime_amount = hourly_wages * 4 * overtime_type.standard_multiplier
 
 		self.assertEqual(flt(overtime_amount, 2), flt(overtime_component_details.amount, 2))
 
@@ -2260,6 +2268,8 @@ def setup_test():
 		"Payroll Period",
 		"Overtime Type",
 		"Overtime Slip",
+		"Shift Type",
+		"Shift Assignment",
 	]:
 		frappe.db.sql("delete from `tab%s`" % dt)
 
