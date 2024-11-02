@@ -1690,6 +1690,7 @@ class TestSalarySlip(IntegrationTestCase):
 		)
 		from hrms.hr.doctype.overtime_type.test_overtime_type import create_overtime_type
 		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
+		from hrms.payroll.doctype.salary_slip.salary_slip import convert_str_time_to_hours
 		from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
 
 		setup_shift_type(company="_Test Company")
@@ -1715,7 +1716,11 @@ class TestSalarySlip(IntegrationTestCase):
 		make_salary_component(component, test_tax=0, company_list=[company])
 
 		overtime_type = create_overtime_type(employee=employee)
-		create_attendance_records_for_overtime(employee, overtime_type=overtime_type.name)
+		attendance = create_attendance_records_for_overtime(employee, overtime_type=overtime_type.name)
+
+		total_overtime_hours = 0
+		for attendance_entry in attendance.values():
+			total_overtime_hours += convert_str_time_to_hours(attendance_entry["overtime_duration"])
 
 		slip = create_overtime_slip(employee)
 		slip.status = "Approved"
@@ -1741,7 +1746,7 @@ class TestSalarySlip(IntegrationTestCase):
 		hourly_wages = daily_wages / 4
 
 		# formula = hourly wages * overtime hours * multiplier
-		overtime_amount = hourly_wages * 4 * overtime_type.standard_multiplier
+		overtime_amount = hourly_wages * total_overtime_hours * overtime_type.standard_multiplier
 
 		self.assertEqual(flt(overtime_amount, 2), flt(overtime_component_details.amount, 2))
 
