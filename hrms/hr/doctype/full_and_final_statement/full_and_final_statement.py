@@ -9,7 +9,13 @@ from frappe.utils import flt, get_link_to_form, today
 
 class FullandFinalStatement(Document):
 	def on_change(self):
-		update_status_of_reference_documents(self, self.status)
+		for payable in self.payables:
+			if payable.component == "Gratuity":
+				frappe.db.set_value(
+					"Gratuity",
+					payable.reference_document,
+					{"status": self.status, "paid_amount": payable.amount},
+				)
 
 	def before_insert(self):
 		self.get_outstanding_statements()
@@ -231,6 +237,7 @@ def update_full_and_final_statement_status(doc, method=None):
 			fnf = frappe.get_doc("Full and Final Statement", entry.reference_name)
 			fnf.db_set("status", status)
 			fnf.notify_update()
+<<<<<<< HEAD
 
 
 def update_status_of_reference_documents(doc, status="Paid"):
@@ -238,3 +245,5 @@ def update_status_of_reference_documents(doc, status="Paid"):
 		if payable.component == "Gratuity":
 			frappe.db.set_value("Gratuity", payable.reference_document, "status", status)
 >>>>>>> 885cf10b (fix: update status of reference documents)
+=======
+>>>>>>> b5af146f (fix: set gratuity paid_amont field)
