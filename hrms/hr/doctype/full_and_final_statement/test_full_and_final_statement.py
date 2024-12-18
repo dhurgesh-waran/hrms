@@ -33,7 +33,11 @@ class TestFullandFinalStatement(FrappeTestCase):
 			"Leave Encashment",
 		]
 
+<<<<<<< HEAD
 		receivable_bootstraped_component = ["Loan", "Employee Advance"]
+=======
+		receivable_bootstraped_component = self.fnf.get_receivable_component()
+>>>>>>> 5dd9e1eb (chore: add gratuity test and update fnf test)
 
 		# checking payable s and receivables bootstraped value
 		self.assertEqual([payable.component for payable in fnf.payables], payables_bootstraped_component)
