@@ -32,6 +32,7 @@ class FullandFinalStatement(Document):
 		self.ignore_linked_doctypes = ("GL Entry",)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		self.set_gratuity_status()
 >>>>>>> 9079dbb1 (fix: refactor code, consider fnf payment status update via journal entry)
 =======
@@ -39,6 +40,8 @@ class FullandFinalStatement(Document):
 =======
 		self.set_gratuity_status()
 >>>>>>> 8f98b702 (fix: refactor code, consider fnf payment status update via journal entry)
+=======
+>>>>>>> 3007ff06 (fix: skip updating gratuity status on FnF cancellation)
 
 	def validate_relieving_date(self):
 		if not self.relieving_date:
