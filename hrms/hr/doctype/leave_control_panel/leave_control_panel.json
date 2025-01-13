@@ -186,7 +186,11 @@
  "idx": 1,
  "issingle": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2024-03-20 15:05:39.635388",
+=======
+ "modified": "2025-01-13 13:47:55.262534",
+>>>>>>> 8a415caf (fix: disable 'User Cannot Search' for bulk tools (#2630))
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Control Panel",
@@ -199,8 +203,12 @@
    "write": 1
   }
  ],
+<<<<<<< HEAD
  "read_only": 1,
  "sort_field": "modified",
+=======
+ "sort_field": "creation",
+>>>>>>> 8a415caf (fix: disable 'User Cannot Search' for bulk tools (#2630))
  "sort_order": "DESC",
  "states": []
 }
