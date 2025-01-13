@@ -163,12 +163,7 @@
    "write": 1
   }
  ],
-<<<<<<< HEAD
- "read_only": 1,
- "sort_field": "modified",
-=======
  "sort_field": "creation",
->>>>>>> 8a415caf (fix: disable 'User Cannot Search' for bulk tools (#2630))
  "sort_order": "DESC",
  "states": []
 }
