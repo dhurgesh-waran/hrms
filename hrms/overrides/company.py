@@ -132,3 +132,21 @@ def validate_default_accounts(doc, method=None):
 					"{0} currency must be same as company's default currency. Please select another account."
 				).format(frappe.bold("Default Payroll Payable Account"))
 			)
+
+
+def get_company_data_to_be_ignored():
+	if "erpnext" in frappe.get_installed_apps():
+		return [
+			"Salary Component Account",
+			"Salary Structure",
+			"Salary Structure Assignment",
+			"Payroll Period",
+			"Income Tax Slab",
+			"Leave Policy",
+			"Leave Period",
+			"Leave Policy Assignment",
+			"Employee Onboarding Template",
+			"Employee Separation Template",
+			"Job Offer Term Template",
+		]
+	return []

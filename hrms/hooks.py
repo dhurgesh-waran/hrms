@@ -1,3 +1,5 @@
+from hrms.overrides.company import get_company_data_to_be_ignored
+
 app_name = "hrms"
 app_title = "Frappe HR"
 app_publisher = "Frappe Technologies Pvt. Ltd."
@@ -138,6 +140,7 @@ doc_events = {
 			"hrms.overrides.company.make_company_fixtures",
 			"hrms.overrides.company.set_default_hr_accounts",
 		],
+		"on_trash": "hrms.overrides.company.unset_company_field",
 	},
 	"Timesheet": {"validate": "hrms.hr.utils.validate_active_employee"},
 	"Payment Entry": {
@@ -304,3 +307,5 @@ override_doctype_dashboards = {
 # Recommended only for DocTypes which have limited documents with untranslated names
 # For example: Role, Gender, etc.
 # translated_search_doctypes = []
+
+company_data_to_be_ignored = get_company_data_to_be_ignored()
