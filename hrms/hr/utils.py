@@ -762,7 +762,26 @@ def get_ec_matching_query(bank_account, company, exact_match, from_date=None, to
 	mode_of_payments = "('" + "', '".join(mode_of_payments) + "' )"
 	company_currency = get_company_currency(company)
 
+<<<<<<< HEAD
 	filter_by_date = ""
+=======
+	filters.append(ec.docstatus == 1)
+	filters.append(ec.is_paid == 1)
+	filters.append(ec.clearance_date.isnull())
+	if mode_of_payments:
+		filters.append(ec.mode_of_payment.isin(mode_of_payments))
+
+	if common_filters:
+		ref_rank = frappe.qb.terms.Case().when(ec.employee == common_filters.party, 1).else_(0) + 1
+
+		if exact_match:
+			filters.append(ec.total_amount_reimbursed == common_filters.amount)
+		else:
+			filters.append(ec.total_amount_reimbursed.gt(common_filters.amount))
+	else:
+		ref_rank = ConstantColumn(1)
+
+>>>>>>> 508fa385 (fix: Bank Reconciliation tool fails to match on expense claims with tax (#2594))
 	if from_date and to_date:
 		filter_by_date = f"AND posting_date BETWEEN '{from_date}' AND '{to_date}'"
 
