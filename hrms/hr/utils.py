@@ -766,6 +766,7 @@ def get_ec_matching_query(bank_account, company, exact_match, from_date=None, to
 	if from_date and to_date:
 		filter_by_date = f"AND posting_date BETWEEN '{from_date}' AND '{to_date}'"
 
+<<<<<<< HEAD
 	return f"""
 		SELECT
 			( CASE WHEN employee = %(party)s THEN 1 ELSE 0 END
@@ -789,3 +790,138 @@ def get_ec_matching_query(bank_account, company, exact_match, from_date=None, to
 			AND mode_of_payment in {mode_of_payments}
 			{filter_by_date}
 	"""
+=======
+	ec_query = (
+		qb.from_(ec)
+		.select(
+			ref_rank.as_("rank"),
+			ConstantColumn("Expense Claim").as_("doctype"),
+			ec.name,
+			ec.total_sanctioned_amount.as_("paid_amount"),
+			ConstantColumn("").as_("reference_no"),
+			ConstantColumn("").as_("reference_date"),
+			ec.employee.as_("party"),
+			ConstantColumn("Employee").as_("party_type"),
+			ec.posting_date,
+			ConstantColumn(company_currency).as_("currency"),
+		)
+		.where(Criterion.all(filters))
+	)
+
+	if from_date and to_date:
+		ec_query = ec_query.orderby(ec.posting_date)
+
+	return ec_query
+
+
+def validate_bulk_tool_fields(
+	self, fields: list, employees: list, from_date: str | None = None, to_date: str | None = None
+) -> None:
+	for d in fields:
+		if not self.get(d):
+			frappe.throw(_("{0} is required").format(self.meta.get_label(d)), title=_("Missing Field"))
+	if self.get(from_date) and self.get(to_date):
+		self.validate_from_to_dates(from_date, to_date)
+	if not employees:
+		frappe.throw(
+			_("Please select at least one employee to perform this action."),
+			title=_("No Employees Selected"),
+		)
+
+
+def notify_bulk_action_status(doctype: str, failure: list, success: list) -> None:
+	frappe.clear_messages()
+
+	msg = ""
+	title = ""
+	if failure:
+		msg += _("Failed to create/submit {0} for employees:").format(doctype)
+		msg += " " + comma_and(failure, False) + "<hr>"
+		msg += (
+			_("Check {0} for more details")
+			.format("<a href='/app/List/Error Log?reference_doctype={0}'>{1}</a>")
+			.format(doctype, _("Error Log"))
+		)
+
+		if success:
+			title = _("Partial Success")
+			msg += "<hr>"
+		else:
+			title = _("Creation Failed")
+	else:
+		title = _("Success")
+
+	if success:
+		msg += _("Successfully created {0} for employees:").format(doctype)
+		msg += " " + comma_and(success, False)
+
+	if failure:
+		indicator = "orange" if success else "red"
+	else:
+		indicator = "green"
+
+	frappe.msgprint(
+		msg,
+		indicator=indicator,
+		title=title,
+		is_minimizable=True,
+	)
+
+
+@frappe.whitelist()
+def set_geolocation_from_coordinates(doc):
+	if not frappe.db.get_single_value("HR Settings", "allow_geolocation_tracking"):
+		return
+
+	if not (doc.latitude and doc.longitude):
+		return
+
+	doc.geolocation = frappe.json.dumps(
+		{
+			"type": "FeatureCollection",
+			"features": [
+				{
+					"type": "Feature",
+					"properties": {},
+					# geojson needs coordinates in reverse order: long, lat instead of lat, long
+					"geometry": {"type": "Point", "coordinates": [doc.longitude, doc.latitude]},
+				}
+			],
+		}
+	)
+
+
+def get_distance_between_coordinates(lat1, long1, lat2, long2):
+	from math import asin, cos, pi, sqrt
+
+	r = 6371
+	p = pi / 180
+
+	a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((long2 - long1) * p)) / 2
+	return 2 * r * asin(sqrt(a)) * 1000
+
+
+def check_app_permission():
+	"""Check if user has permission to access the app (for showing the app on app screen)"""
+	if frappe.session.user == "Administrator":
+		return True
+
+	if frappe.has_permission("Employee", ptype="read"):
+		return True
+
+	return False
+
+
+def get_exact_month_diff(string_ed_date: DateTimeLikeObject, string_st_date: DateTimeLikeObject) -> int:
+	"""Return the difference between given two dates in months."""
+	ed_date = getdate(string_ed_date)
+	st_date = getdate(string_st_date)
+	diff = (ed_date.year - st_date.year) * 12 + ed_date.month - st_date.month
+
+	# count the last month only if end date's day > start date's day
+	# to handle cases like 16th Jul 2024 - 15th Jul 2025
+	# where framework's month_diff will calculate diff as 13 months
+	if ed_date.day > st_date.day:
+		diff += 1
+	return diff
+>>>>>>> 76cbd4aa (fix: Bank Reconciliation tool fails with KeyError: 'payment_doctype' (#2592))
