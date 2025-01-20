@@ -33,8 +33,10 @@ class TestLeaveEncashment(FrappeTestCase):
 		frappe.db.delete("Additional Salary")
 		frappe.db.delete("Leave Encashment")
 
-		if not frappe.db.exists("Leave Type", "_Test Leave Type Encashment"):
-			frappe.get_doc(test_records[2]).insert()
+		self.leave_type = "_Test Leave Type Encashment"
+		if frappe.db.exists("Leave Type", self.leave_type):
+			frappe.delete_doc("Leave Type", self.leave_type, force=True)
+		frappe.get_doc(test_records[2]).insert()
 
 		date = getdate()
 		year_start = getdate(get_year_start(date))
