@@ -388,10 +388,14 @@ class IncomeTaxComputationReport:
 			)
 		)
 
+<<<<<<< HEAD
 		for emp, emp_details in self.employees.items():
 			if not self.employees[emp]["allow_tax_exemption"]:
 				continue
 
+=======
+		for emp_details in self.employees.values():
+>>>>>>> 1788d5d6 (chore: fix linter issue for emp variable in report file (#2679))
 			income_tax_slab = emp_details.get("income_tax_slab")
 			standard_exemption = standard_exemptions_per_slab.get(income_tax_slab, 0)
 			emp_details["standard_tax_exemption"] = standard_exemption
