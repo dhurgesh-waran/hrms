@@ -1,5 +1,3 @@
-from hrms.overrides.company import get_company_data_to_be_ignored
-
 app_name = "hrms"
 app_title = "Frappe HR"
 app_publisher = "Frappe Technologies Pvt. Ltd."
@@ -308,4 +306,16 @@ override_doctype_dashboards = {
 # For example: Role, Gender, etc.
 # translated_search_doctypes = []
 
-company_data_to_be_ignored = get_company_data_to_be_ignored()
+company_data_to_be_ignored = [
+	"Salary Component Account",
+	"Salary Structure",
+	"Salary Structure Assignment",
+	"Payroll Period",
+	"Income Tax Slab",
+	"Leave Policy",
+	"Leave Period",
+	"Leave Policy Assignment",
+	"Employee Onboarding Template",
+	"Employee Separation Template",
+	"Job Offer Term Template",
+]
