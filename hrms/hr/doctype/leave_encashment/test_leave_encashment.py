@@ -170,7 +170,7 @@ class TestLeaveEncashment(FrappeTestCase):
 			"Leave Ledger Entry", fields=["leaves"], filters={"transaction_name": leave_encashment.name}
 		)
 		self.assertEqual(len(leave_ledger_entry), 1)
-		self.assertEqual(leave_ledger_entry[0].leaves, leave_encashment.encashment_days * -1)
+		self.assertEqual(leave_ledger_entry[0].leaves, leave_encashment.encashable_days * -1)
 
 		# check if unused leaves are 5 after processing expired allocation runs
 		process_expired_allocation()
@@ -197,8 +197,8 @@ class TestLeaveEncashment(FrappeTestCase):
 			order_by="leaves",
 		)
 		self.assertEqual(len(leave_ledger_entry), 2)
-		self.assertEqual(leave_ledger_entry[0].leaves, leave_encashment.encashment_days * -1)
-		self.assertEqual(leave_ledger_entry[1].leaves, leave_encashment.encashment_days * 1)
+		self.assertEqual(leave_ledger_entry[0].leaves, leave_encashment.encashable_days * -1)
+		self.assertEqual(leave_ledger_entry[1].leaves, leave_encashment.encashable_days * 1)
 
 		# check if 10 leaves are expired after processing expired allocation runs
 		process_expired_allocation()
