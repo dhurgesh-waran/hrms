@@ -156,10 +156,8 @@ class TestLeaveEncashment(FrappeTestCase):
 	@set_holiday_list("_Test Leave Encashment", "_Test Company")
 	def test_unused_leaves_after_leave_encashment_for_carry_forwarding_leave_type(self):
 		employee = make_employee("test_employee2_encashment@example.com", company="_Test Company")
-		# allocated 10 leaves, encashed 5
-		leave_encashment = self.get_encashment_created_after_leave_period(
-			employee, is_carry_forward=1, encashment_days=5
-		)
+		# allocated 10 leaves, encashable threshold is set 5 in test records, so encashed days are 5
+		leave_encashment = self.get_encashment_created_after_leave_period(employee, is_carry_forward=1)
 		# check if unused leaves are 5 before processing expired allocation runs
 		unused_leaves = get_unused_leaves(
 			employee, self.leave_type, self.leave_period.from_date, self.leave_period.to_date
@@ -184,11 +182,9 @@ class TestLeaveEncashment(FrappeTestCase):
 	@set_holiday_list("_Test Leave Encashment", "_Test Company")
 	def test_leave_expiry_after_leave_encashment_for_non_carry_forwarding_leave_type(self):
 		employee = make_employee("test_employee3_encashment@example.com", company="_Test Company")
-		# allocated 10 leaves, encashed 3
+		# allocated 10 leaves, encashable days threshold is 5, so encashed days are 5
 
-		leave_encashment = self.get_encashment_created_after_leave_period(
-			employee, is_carry_forward=0, encashment_days=3
-		)
+		leave_encashment = self.get_encashment_created_after_leave_period(employee, is_carry_forward=0)
 		# when leave encashment is created after leave allocation period is over,
 		# it's assumed that process expired allocation has expired the leaves,
 		# hence a reverse ledger entry should be created for the encashment
@@ -214,7 +210,7 @@ class TestLeaveEncashment(FrappeTestCase):
 		)
 		self.assertEqual(expired_leaves, -10)
 
-	def get_encashment_created_after_leave_period(self, employee, is_carry_forward, encashment_days):
+	def get_encashment_created_after_leave_period(self, employee, is_carry_forward):
 		frappe.db.delete("Leave Period", {"name": self.leave_period.name})
 		# create new leave period that has end date of yesterday
 		start_date = add_days(getdate(), -30)
@@ -250,7 +246,6 @@ class TestLeaveEncashment(FrappeTestCase):
 				"leave_type": self.leave_type,
 				"leave_period": self.leave_period.name,
 				"encashment_date": self.leave_period.to_date,
-				"encashment_days": encashment_days,
 				"currency": "INR",
 			}
 		).insert()
