@@ -26,7 +26,7 @@
   "leave_status_notification_template",
   "leave_approver_mandatory_in_leave_application",
   "restrict_backdated_leave_application",
-  "allow_self_leave_approval",
+  "prevent_self_leave_approval",
   "role_allowed_to_create_backdated_leave_application",
   "column_break_29",
   "expense_approver_mandatory_in_expense_claim",
@@ -330,10 +330,14 @@
   },
   {
    "default": "1",
-   "fieldname": "allow_self_leave_approval",
+   "fieldname": "prevent_self_leave_approval",
    "fieldtype": "Check",
+<<<<<<< HEAD
    "label": "Enable Self-Approval For Leaves"
 >>>>>>> c74d2bb2 (feat: new hr setting to enable/disable self-leave approval)
+=======
+   "label": "Prevent self approval for leaves even if user has permissions"
+>>>>>>> 52b5e1f9 (fix: status fields becomes read only if self leave approval is prevented)
   }
  ],
  "icon": "fa fa-cog",
@@ -341,10 +345,14 @@
  "issingle": 1,
  "links": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
  "modified": "2024-06-26 15:20:17.802079",
 =======
  "modified": "2024-12-02 13:25:31.843494",
 >>>>>>> c74d2bb2 (feat: new hr setting to enable/disable self-leave approval)
+=======
+ "modified": "2024-12-11 12:34:33.019189",
+>>>>>>> 52b5e1f9 (fix: status fields becomes read only if self leave approval is prevented)
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",

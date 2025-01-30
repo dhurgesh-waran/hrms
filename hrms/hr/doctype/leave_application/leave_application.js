@@ -12,7 +12,6 @@ frappe.ui.form.on("Leave Application", {
 				},
 			};
 		});
-
 		frm.set_query("employee", erpnext.queries.employee);
 	},
 
@@ -114,8 +113,12 @@ frappe.ui.form.on("Leave Application", {
 		if (frm.doc.docstatus === 0) {
 			frm.trigger("make_dashboard");
 		}
+<<<<<<< HEAD
 		frm.trigger("prevent_self_leave_approval");
 >>>>>>> 4acf169c (feat: Enable/disable leave applicants from approving their own leaves based on the leave approval HR setting)
+=======
+		frm.trigger("set_form_buttons");
+>>>>>>> 52b5e1f9 (fix: status fields becomes read only if self leave approval is prevented)
 	},
 
 	async set_employee(frm) {
@@ -137,7 +140,6 @@ frappe.ui.form.on("Leave Application", {
 		if (frm.doc.leave_approver) {
 			frm.set_value("leave_approver_name", frappe.user.full_name(frm.doc.leave_approver));
 		}
-		frm.trigger("prevent_self_leave_approval");
 	},
 
 	leave_type: function (frm) {
@@ -259,37 +261,53 @@ frappe.ui.form.on("Leave Application", {
 		}
 	},
 
-	prevent_self_leave_approval: async function (frm) {
-		let is_invalid_leave_approver = invalid_leave_approver(
-			frm.doc.employee,
-			await hrms.get_current_employee(),
-			await self_approval_not_allowed(),
-		);
-
+	set_form_buttons: async function (frm) {
+		let self_approval_not_allowed = frm.doc.__onload
+			? frm.doc.__onload.self_leave_approval_not_allowed
+			: 0;
+		let current_employee = await hrms.get_current_employee();
 		if (
 			frm.doc.docstatus === 0 &&
-			is_invalid_leave_approver &&
 			!frm.is_dirty() &&
 			!frappe.model.has_workflow(frm.doctype)
 		) {
-			frm.page.clear_primary_action();
-			$(".form-message").prop("hidden", true);
+			if (current_employee != frm.doc.employee) {
+				frm.trigger("show_grouped_buttons");
+			} else if (self_approval_not_allowed) {
+				frm.set_df_property("status", "read_only", 1);
+				frm.trigger("show_save_button");
+			}
 		}
 	},
+	show_save_button: function (frm) {
+		frm.page.set_primary_action("Save", () => {
+			frm.save();
+		});
+		$(".form-message").prop("hidden", true);
+	},
+
+	show_grouped_buttons: function (frm) {
+		frm.disable_save();
+		$(".form-message").prop("hidden", true);
+		frm.add_custom_button(
+			"Approve",
+			() => {
+				frm.set_value("status", "Approved");
+				frm.save("Submit");
+			},
+			"Actions",
+		);
+		frm.add_custom_button(
+			"Reject",
+			() => {
+				frm.set_value("status", "Rejected");
+				frm.save("Submit");
+			},
+			"Actions",
+		);
+		frm.page.set_inner_btn_group_as_primary("Actions");
+	},
 });
-
-function invalid_leave_approver(leave_applicant, current_employee, self_approval_not_allowed) {
-	const invalid_leave_approver =
-		self_approval_not_allowed && leave_applicant == current_employee ? 1 : 0;
-	return invalid_leave_approver;
-}
-
-async function self_approval_not_allowed() {
-	allow_self_leave_approval = cint(
-		await frappe.db.get_single_value("HR Settings", "allow_self_leave_approval"),
-	);
-	return !allow_self_leave_approval;
-}
 
 frappe.tour["Leave Application"] = [
 	{
