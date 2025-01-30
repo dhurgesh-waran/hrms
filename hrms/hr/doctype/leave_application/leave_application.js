@@ -89,6 +89,10 @@ frappe.ui.form.on("Leave Application", {
 	},
 
 	refresh: function (frm) {
+<<<<<<< HEAD
+=======
+		hrms.leave_utils.add_view_ledger_button(frm);
+>>>>>>> bb15010d (fix: removed action buttons)
 		if (frm.is_new()) {
 			frm.trigger("calculate_total_days");
 		}
@@ -271,9 +275,7 @@ frappe.ui.form.on("Leave Application", {
 			!frm.is_dirty() &&
 			!frappe.model.has_workflow(frm.doctype)
 		) {
-			if (current_employee != frm.doc.employee) {
-				frm.trigger("show_grouped_buttons");
-			} else if (self_approval_not_allowed) {
+			if (self_approval_not_allowed && current_employee == frm.doc.employee) {
 				frm.set_df_property("status", "read_only", 1);
 				frm.trigger("show_save_button");
 			}
@@ -284,28 +286,6 @@ frappe.ui.form.on("Leave Application", {
 			frm.save();
 		});
 		$(".form-message").prop("hidden", true);
-	},
-
-	show_grouped_buttons: function (frm) {
-		frm.disable_save();
-		$(".form-message").prop("hidden", true);
-		frm.add_custom_button(
-			__("Approve"),
-			() => {
-				frm.set_value("status", "Approved");
-				frm.save("Submit");
-			},
-			__("Actions"),
-		);
-		frm.add_custom_button(
-			__("Reject"),
-			() => {
-				frm.set_value("status", "Rejected");
-				frm.save("Submit");
-			},
-			__("Actions"),
-		);
-		frm.page.set_inner_btn_group_as_primary(__("Actions"));
 	},
 });
 
