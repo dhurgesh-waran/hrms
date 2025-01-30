@@ -329,7 +329,7 @@
    "label": " Unlink Payment on Cancellation of Employee Advance"
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "prevent_self_leave_approval",
    "fieldtype": "Check",
 <<<<<<< HEAD
@@ -346,6 +346,7 @@
  "links": [],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  "modified": "2024-06-26 15:20:17.802079",
 =======
  "modified": "2024-12-02 13:25:31.843494",
@@ -353,6 +354,9 @@
 =======
  "modified": "2024-12-11 12:34:33.019189",
 >>>>>>> 52b5e1f9 (fix: status fields becomes read only if self leave approval is prevented)
+=======
+ "modified": "2025-01-30 12:41:22.594071",
+>>>>>>> e49c5a72 (fix: prevent_self_leave_approval should be false by deafult)
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",
