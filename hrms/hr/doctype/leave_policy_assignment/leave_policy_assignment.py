@@ -165,7 +165,7 @@ class LeavePolicyAssignment(Document):
 		from hrms.hr.utils import get_monthly_earned_leave
 
 		def _get_current_and_from_date():
-			current_date = frappe.flags.current_date or getdate()
+			current_date = getdate(frappe.flags.current_date) or getdate()
 			if current_date > getdate(self.effective_to):
 				current_date = getdate(self.effective_to)
 
