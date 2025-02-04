@@ -142,7 +142,7 @@ class SalarySlip(TransactionBase):
 		self.validate_dates()
 		self.check_existing()
 
-		if not self.salary_slip_based_on_timesheet:
+		if self.payroll_frequency:
 			self.get_date_details()
 
 		if not (len(self.get("earnings")) or len(self.get("deductions"))):
@@ -349,7 +349,7 @@ class SalarySlip(TransactionBase):
 			self.set("earnings", [])
 			self.set("deductions", [])
 
-			if not self.salary_slip_based_on_timesheet:
+			if self.payroll_frequency:
 				self.get_date_details()
 
 			self.validate_dates()
@@ -960,10 +960,14 @@ class SalarySlip(TransactionBase):
 
 		if hasattr(self, "total_structured_tax_amount") and hasattr(self, "current_structured_tax_amount"):
 			self.future_income_tax_deductions = (
-				self.total_structured_tax_amount - self.income_tax_deducted_till_date
+				self.total_structured_tax_amount
+				+ self.get("full_tax_on_additional_earnings", 0)
+				- self.income_tax_deducted_till_date
 			)
 
-			self.current_month_income_tax = self.current_structured_tax_amount
+			self.current_month_income_tax = self.current_structured_tax_amount + self.get(
+				"full_tax_on_additional_earnings", 0
+			)
 
 			# non included current_month_income_tax separately as its already considered
 			# while calculating income_tax_deducted_till_date
@@ -1716,7 +1720,7 @@ class SalarySlip(TransactionBase):
 
 					taxable_earnings -= flt(amount - additional_amount)
 					additional_income -= additional_amount
-					amount_exempted_from_income_tax = flt(amount - additional_amount)
+					amount_exempted_from_income_tax += flt(amount - additional_amount)
 
 					if additional_amount and ded.is_recurring_additional_salary:
 						additional_income -= self.get_future_recurring_additional_amount(
@@ -1951,7 +1955,7 @@ class SalarySlip(TransactionBase):
 
 	def process_salary_structure(self, for_preview=0):
 		"""Calculate salary after salary structure details have been updated"""
-		if not self.salary_slip_based_on_timesheet:
+		if self.payroll_frequency:
 			self.get_date_details()
 		self.pull_emp_details()
 		self.get_working_days_details(for_preview=for_preview)
