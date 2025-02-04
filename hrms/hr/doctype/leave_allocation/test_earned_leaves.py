@@ -569,6 +569,7 @@ def make_policy_assignment(
 	rounding=0.5,
 	earned_leave_frequency="Monthly",
 	start_date=None,
+	end_date=None,
 	annual_allocation=12,
 	carry_forward=0,
 	assignment_based_on="Leave Period",
