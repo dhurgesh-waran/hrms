@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="my-5">
 	<h3>{{ doc.job_title }}</h3>
 	<p>{{ doc.description }}</p>
@@ -16,3 +17,9 @@
 		{% endif %}
 	</div>
 </div>
+=======
+<div>
+	<a href="/{{ doc.route |e }}">{{ (doc.title or doc.name) |e }}</a>
+</div>
+<!-- this is a sample default list template -->
+>>>>>>> bc498851 (refactor: Use web view for job opening)
