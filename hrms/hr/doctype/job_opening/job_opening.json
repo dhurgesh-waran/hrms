@@ -189,11 +189,7 @@
  "idx": 1,
  "is_published_field": "publish",
  "links": [],
-<<<<<<< HEAD
- "modified": "2023-09-14 16:50:39.316079",
-=======
  "modified": "2025-02-11 22:41:14.873299",
->>>>>>> bc498851 (refactor: Use web view for job opening)
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Opening",
