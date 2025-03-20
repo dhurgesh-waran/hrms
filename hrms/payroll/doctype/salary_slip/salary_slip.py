@@ -3,7 +3,7 @@
 
 
 import unicodedata
-from datetime import date, timedelta
+from datetime import date
 
 import frappe
 from frappe import _, msgprint
@@ -207,30 +207,6 @@ class SalarySlip(TransactionBase):
 					self.email_salary_slip()
 
 		self.update_payment_status_for_gratuity()
-		self.update_overtime_slip()
-
-	def update_overtime_slip(self):
-		overtime_slips = []
-		for data in self.earnings:
-			if data.overtime_slips:
-				overtime_slips.extend(data.overtime_slips.split(", "))
-
-		if self.docstatus == 1:
-			for slip in overtime_slips:
-				frappe.db.set_value("Overtime Slip", slip, "salary_slip", self.name)
-
-		if self.docstatus == 2:
-			for slip in overtime_slips:
-				frappe.db.set_value("Overtime Slip", slip, "salary_slip", None)
-				frappe.db.set_value("Overtime Slip", slip, "docstatus", 1)
-
-			frappe.msgprint(
-				msg=_("Unlinked Salary Slip from Overtime Slip"),
-				title=_("Unlinked Overtime Slips"),
-				indicator="blue",
-				is_minimizable=True,
-				wide=True,
-			)
 
 	def update_payment_status_for_gratuity(self):
 		additional_salary = frappe.db.get_all(
@@ -257,9 +233,6 @@ class SalarySlip(TransactionBase):
 
 		cancel_loan_repayment_entry(self)
 		self.publish_update()
-
-	def before_cancel(self):
-		self.update_overtime_slip()
 
 	def publish_update(self):
 		employee_user = frappe.db.get_value("Employee", self.employee, "user_id", cache=True)
@@ -1429,10 +1402,7 @@ class SalarySlip(TransactionBase):
 		data=None,
 		default_amount=None,
 		remove_if_zero_valued=None,
-		processed_overtime_slips=None,
 	):
-		if processed_overtime_slips is None:
-			processed_overtime_slips = []
 		component_row = None
 		for d in self.get(component_type):
 			if d.salary_component != component_data.salary_component:
@@ -1473,10 +1443,6 @@ class SalarySlip(TransactionBase):
 				"exempted_from_income_tax",
 			):
 				component_row.set(attr, component_data.get(attr))
-
-		processed_overtime_slips = ", ".join(processed_overtime_slips)
-		if processed_overtime_slips:
-			component_row.overtime_slips = processed_overtime_slips
 
 		if additional_salary:
 			if additional_salary.overwrite:
@@ -2382,18 +2348,3 @@ def email_salary_slips(names) -> None:
 	for name in names:
 		salary_slip = frappe.get_doc("Salary Slip", name)
 		salary_slip.email_salary_slip()
-
-
-def convert_str_time_to_hours(duration_str):
-	# Split the string into hours, minutes, and seconds
-	if isinstance(duration_str, timedelta):
-		duration_str = format_time(duration_str)
-	if not duration_str:
-		return
-	parts = duration_str.split(":")
-	hours = int(parts[0])
-	minutes = int(parts[1]) if len(parts) > 1 else 0
-	seconds = int(float(parts[2])) if len(parts) > 2 else 0  # Default to 0 if seconds are missing
-
-	total_seconds = hours * 3600 + minutes * 60 + seconds
-	return total_seconds / 3600
