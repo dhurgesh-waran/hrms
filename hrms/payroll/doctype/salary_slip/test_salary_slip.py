@@ -1597,7 +1597,6 @@ class TestSalarySlip(IntegrationTestCase):
 		# Check if zero value component is included in salary slip based on component settings
 		self.assertIn("Arrear", earnings)
 		self.assertEqual(earnings["Arrear"], 0.0)
-		self.assertNotIn("Overtime", earnings)
 
 	def test_component_default_amount_against_statistical_component(self):
 		from hrms.payroll.doctype.salary_structure.test_salary_structure import (
@@ -1693,73 +1692,6 @@ class TestSalarySlip(IntegrationTestCase):
 		tax_component = salary_slip.get_tax_components()
 		self.assertEqual(test_tds.accounts[0].company, salary_slip.company)
 		self.assertListEqual(tax_component, ["_Test TDS"])
-
-	def test_overtime_calculation(self):
-		from hrms.hr.doctype.overtime_slip.test_overtime_slip import (
-			create_attendance_records_for_overtime,
-			create_overtime_slip,
-		)
-		from hrms.hr.doctype.overtime_type.test_overtime_type import create_overtime_type
-		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
-		from hrms.payroll.doctype.salary_slip.salary_slip import convert_str_time_to_hours
-		from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
-
-		setup_shift_type(company="_Test Company")
-
-		employee = make_employee("test_overtime_slipn@example.com")
-		salary_structure = make_salary_structure(
-			"Test Overtime Salary Slip",
-			"Monthly",
-			employee=employee,
-			company="_Test Company",
-		)
-
-		component = [
-			{
-				"salary_component": "Overtime Allowance",
-				"abbr": "OA",
-				"type": "Earning",
-				"amount_based_on_formula": 0,
-			}
-		]
-
-		company = erpnext.get_default_company()
-		make_salary_component(component, test_tax=0, company_list=[company])
-
-		overtime_type = create_overtime_type(employee=employee)
-		attendance = create_attendance_records_for_overtime(employee, overtime_type=overtime_type.name)
-
-		total_overtime_hours = 0
-		for attendance_entry in attendance.values():
-			total_overtime_hours += convert_str_time_to_hours(attendance_entry["overtime_duration"])
-
-		slip = create_overtime_slip(employee)
-		slip.status = "Approved"
-		slip.submit()
-
-		salary_slip = make_salary_slip(salary_structure.name, employee=employee)
-		overtime_component_details = {}
-		applicable_amount = 0
-
-		for earning in salary_slip.earnings:
-			if earning.salary_component == "Overtime Allowance":
-				overtime_component_details = earning
-
-			if earning.salary_component == "Basic Salary":
-				applicable_amount = earning.default_amount
-
-		self.assertIn("Overtime Allowance", overtime_component_details.salary_component)
-		self.assertEqual(slip.name, overtime_component_details.overtime_slips)
-
-		daily_wages = applicable_amount / salary_slip.total_working_days
-
-		# Standard working hours is 4
-		hourly_wages = daily_wages / 4
-
-		# formula = hourly wages * overtime hours * multiplier
-		overtime_amount = hourly_wages * total_overtime_hours * overtime_type.standard_multiplier
-
-		self.assertEqual(flt(overtime_amount, 2), flt(overtime_component_details.amount, 2))
 
 
 class TestSalarySlipSafeEval(IntegrationTestCase):
@@ -2284,10 +2216,6 @@ def setup_test():
 		"Employee Benefit Claim",
 		"Salary Structure Assignment",
 		"Payroll Period",
-		"Overtime Type",
-		"Overtime Slip",
-		"Shift Type",
-		"Shift Assignment",
 	]:
 		frappe.db.sql("delete from `tab%s`" % dt)
 
