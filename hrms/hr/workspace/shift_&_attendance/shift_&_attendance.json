@@ -231,11 +231,7 @@
    "type": "Link"
   }
  ],
-<<<<<<< HEAD
- "modified": "2024-12-10 17:51:08.275060",
-=======
  "modified": "2025-04-11 16:43:18.393364",
->>>>>>> 1283c62f (Merge pull request #2887 from seclution/patch-1)
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Shift & Attendance",
@@ -286,10 +282,7 @@
    "type": "DocType"
   }
  ],
-<<<<<<< HEAD
- "title": "Shift & Attendance"
-=======
+
  "title": "Shift & Attendance",
  "type": "Workspace"
->>>>>>> 1283c62f (Merge pull request #2887 from seclution/patch-1)
 }
