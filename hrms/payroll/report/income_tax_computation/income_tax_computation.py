@@ -35,7 +35,12 @@ class IncomeTaxComputationReport:
 	def get_data(self):
 		self.get_employee_details()
 		self.get_future_salary_slips()
+<<<<<<< HEAD
 		self.get_ctc()
+=======
+		self.get_gross_earnings()
+		self.get_income_from_other_sources()
+>>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 		self.get_tax_exempted_earnings_and_deductions()
 		self.get_employee_tax_exemptions()
 		self.get_hra()
@@ -167,7 +172,7 @@ class IncomeTaxComputationReport:
 
 		return last_salary_slip
 
-	def get_ctc(self):
+	def get_gross_earnings(self):
 		# Get total earnings from existing salary slip
 		ss = frappe.qb.DocType("Salary Slip")
 		existing_ss = frappe._dict(
@@ -184,9 +189,15 @@ class IncomeTaxComputationReport:
 
 		for employee in list(self.employees.keys()):
 			future_ss_earnings = self.get_future_earnings(employee)
+<<<<<<< HEAD
 			ctc = flt(existing_ss.get(employee)) + future_ss_earnings
+=======
+			gross_earnings = (
+				flt(opening_taxable_earnings) + flt(existing_ss.get(employee)) + future_ss_earnings
+			)
+>>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 
-			self.employees[employee].setdefault("ctc", ctc)
+			self.employees[employee].setdefault("gross_earnings", gross_earnings)
 
 	def get_future_earnings(self, employee):
 		future_earnings = 0.0
@@ -401,10 +412,26 @@ class IncomeTaxComputationReport:
 
 	def get_total_taxable_amount(self):
 		self.add_column("Total Taxable Amount")
+<<<<<<< HEAD
 		for __, emp_details in self.employees.items():
 			emp_details["total_taxable_amount"] = flt(emp_details.get("ctc")) - flt(
 				emp_details.get("total_exemption")
 			)
+=======
+
+		for employee, emp_details in self.employees.items():
+			total_taxable_amount = 0.0
+			last_ss = self.get_last_salary_slip(employee)
+			if last_ss:
+				total_taxable_amount = frappe.db.get_value(
+					"Salary Slip", last_ss.name, "annual_taxable_amount"
+				)
+			else:
+				future_salary_slips = self.future_salary_slips.get(employee, [])
+				if future_salary_slips:
+					total_taxable_amount = future_salary_slips[-1].get("annual_taxable_amount", 0.0)
+			emp_details["total_taxable_amount"] = total_taxable_amount
+>>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 
 	def get_applicable_tax(self):
 		self.add_column("Applicable Tax")
@@ -482,9 +509,10 @@ class IncomeTaxComputationReport:
 		self.add_column("Payable Tax")
 
 		for __, emp_details in self.employees.items():
-			emp_details["payable_tax"] = flt(emp_details.get("applicable_tax")) - flt(
-				emp_details.get("total_tax_deducted")
-			)
+			payable_tax = flt(emp_details.get("applicable_tax")) - flt(emp_details.get("total_tax_deducted"))
+			if payable_tax < 0:
+				payable_tax = 0.0
+			emp_details["payable_tax"] = payable_tax
 
 	def add_column(self, label, fieldname=None, fieldtype=None, options=None, width=None):
 		col = {
@@ -533,5 +561,10 @@ class IncomeTaxComputationReport:
 				"options": "Income Tax Slab",
 				"width": "140px",
 			},
-			{"label": _("CTC"), "fieldname": "ctc", "fieldtype": "Currency", "width": "140px"},
+			{
+				"label": _("Gross Earnings"),
+				"fieldname": "gross_earnings",
+				"fieldtype": "Currency",
+				"width": "140px",
+			},
 		]
