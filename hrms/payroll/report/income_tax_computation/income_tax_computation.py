@@ -35,12 +35,8 @@ class IncomeTaxComputationReport:
 	def get_data(self):
 		self.get_employee_details()
 		self.get_future_salary_slips()
-<<<<<<< HEAD
-		self.get_ctc()
-=======
 		self.get_gross_earnings()
 		self.get_income_from_other_sources()
->>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 		self.get_tax_exempted_earnings_and_deductions()
 		self.get_employee_tax_exemptions()
 		self.get_hra()
@@ -96,7 +92,13 @@ class IncomeTaxComputationReport:
 				"salary_structure": ["is", "set"],
 				"income_tax_slab": ["is", "set"],
 			},
-			fields=["employee", "income_tax_slab", "salary_structure"],
+			fields=[
+				"employee",
+				"income_tax_slab",
+				"salary_structure",
+				"taxable_earnings_till_date",
+				"tax_deducted_till_date",
+			],
 			order_by="from_date desc",
 		)
 
@@ -114,6 +116,8 @@ class IncomeTaxComputationReport:
 							"salary_structure": d.salary_structure,
 							"income_tax_slab": d.income_tax_slab,
 							"allow_tax_exemption": tax_slab.allow_tax_exemption,
+							"taxable_earnings_till_date": d.taxable_earnings_till_date or 0.0,
+							"tax_deducted_till_date": d.tax_deducted_till_date or 0.0,
 						},
 					)
 		return employee_ss_assignments
@@ -187,15 +191,12 @@ class IncomeTaxComputationReport:
 			).run()
 		)
 
-		for employee in list(self.employees.keys()):
+		for employee, employee_details in self.employees.items():
+			opening_taxable_earnings = employee_details["taxable_earnings_till_date"]
 			future_ss_earnings = self.get_future_earnings(employee)
-<<<<<<< HEAD
-			ctc = flt(existing_ss.get(employee)) + future_ss_earnings
-=======
 			gross_earnings = (
 				flt(opening_taxable_earnings) + flt(existing_ss.get(employee)) + future_ss_earnings
 			)
->>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 
 			self.employees[employee].setdefault("gross_earnings", gross_earnings)
 
@@ -223,6 +224,7 @@ class IncomeTaxComputationReport:
 			.select(ss.name, ss.employee, ss_comps.salary_component, Sum(ss_comps.amount).as_("amount"))
 			.where(ss.docstatus == 1)
 			.where(ss.employee.isin(list(self.employees.keys())))
+			.where(ss_comps.do_not_include_in_total == 0)
 			.where(ss_comps.salary_component.isin(tax_exempted_components))
 			.where(ss.start_date >= self.payroll_period_start_date)
 			.where(ss.end_date <= self.payroll_period_end_date)
@@ -410,14 +412,28 @@ class IncomeTaxComputationReport:
 
 		self.add_column("Total Exemption")
 
+	def get_income_from_other_sources(self):
+		self.add_column("Other Income")
+
+		for employee in list(self.employees.keys()):
+			other_income = (
+				frappe.get_all(
+					"Employee Other Income",
+					filters={
+						"employee": employee,
+						"payroll_period": self.filters.payroll_period,
+						"company": self.filters.company,
+						"docstatus": 1,
+					},
+					fields="SUM(amount) as total_amount",
+				)[0].total_amount
+				or 0.0
+			)
+
+			self.employees[employee].setdefault("other_income", other_income)
+
 	def get_total_taxable_amount(self):
 		self.add_column("Total Taxable Amount")
-<<<<<<< HEAD
-		for __, emp_details in self.employees.items():
-			emp_details["total_taxable_amount"] = flt(emp_details.get("ctc")) - flt(
-				emp_details.get("total_exemption")
-			)
-=======
 
 		for employee, emp_details in self.employees.items():
 			total_taxable_amount = 0.0
@@ -455,7 +471,6 @@ class IncomeTaxComputationReport:
 				)
 
 			emp_details["total_taxable_amount"] = total_taxable_amount
->>>>>>> 78bc2df2 (fix: change ctc column label to Gross Earnings and update Total Taxable Amount value)
 
 	def get_applicable_tax(self):
 		self.add_column("Applicable Tax")
@@ -527,7 +542,8 @@ class IncomeTaxComputationReport:
 		).run(as_dict=True)
 
 		for d in records:
-			self.employees[d.employee].setdefault("total_tax_deducted", d.amount)
+			total_tax_deducted = flt(self.employees[d.employee].get("tax_deducted_till_date", 0)) + d.amount
+			self.employees[d.employee].setdefault("total_tax_deducted", total_tax_deducted)
 
 	def get_payable_tax(self):
 		self.add_column("Payable Tax")
