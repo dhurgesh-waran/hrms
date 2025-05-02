@@ -2170,8 +2170,8 @@ def get_payroll_payable_account(company, payroll_entry):
 
 
 def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=None, eval_locals=None):
-	eval_locals.update({"annual_taxable_earning": annual_taxable_earning})
 	tax_amount = 0
+<<<<<<< HEAD
 	for slab in tax_slab.slabs:
 		cond = cstr(slab.condition).strip()
 		if cond and not eval_tax_slab_condition(cond, eval_globals, eval_locals):
@@ -2179,21 +2179,46 @@ def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=Non
 		if not slab.to_amount and annual_taxable_earning >= slab.from_amount:
 			tax_amount += (annual_taxable_earning - slab.from_amount + 1) * slab.percent_deduction * 0.01
 			continue
+=======
+	other_taxes_and_charges = 0
 
-		if annual_taxable_earning >= slab.from_amount and annual_taxable_earning < slab.to_amount:
-			tax_amount += (annual_taxable_earning - slab.from_amount + 1) * slab.percent_deduction * 0.01
-		elif annual_taxable_earning >= slab.from_amount and annual_taxable_earning >= slab.to_amount:
-			tax_amount += (slab.to_amount - slab.from_amount + 1) * slab.percent_deduction * 0.01
+	if annual_taxable_earning > tax_slab.tax_relief_limit:
+		eval_locals.update({"annual_taxable_earning": annual_taxable_earning})
+>>>>>>> dc4e6b17 (feat: add Taxable Income Relief Threshold Limit field to income tax slab)
 
+		for slab in tax_slab.slabs:
+			cond = cstr(slab.condition).strip()
+			if cond and not eval_tax_slab_condition(cond, eval_globals, eval_locals):
+				continue
+			if not slab.to_amount and annual_taxable_earning >= slab.from_amount:
+				tax_amount += (annual_taxable_earning - slab.from_amount + 1) * slab.percent_deduction * 0.01
+				continue
+
+<<<<<<< HEAD
 	# other taxes and charges on income tax
 	for d in tax_slab.other_taxes_and_charges:
 		if flt(d.min_taxable_income) and flt(d.min_taxable_income) > annual_taxable_earning:
 			continue
+=======
+			if annual_taxable_earning >= slab.from_amount and annual_taxable_earning < slab.to_amount:
+				tax_amount += (annual_taxable_earning - slab.from_amount + 1) * slab.percent_deduction * 0.01
+			elif annual_taxable_earning >= slab.from_amount and annual_taxable_earning >= slab.to_amount:
+				tax_amount += (slab.to_amount - slab.from_amount + 1) * slab.percent_deduction * 0.01
+>>>>>>> dc4e6b17 (feat: add Taxable Income Relief Threshold Limit field to income tax slab)
 
-		if flt(d.max_taxable_income) and flt(d.max_taxable_income) < annual_taxable_earning:
-			continue
+		for d in tax_slab.other_taxes_and_charges:
+			if flt(d.min_taxable_income) and flt(d.min_taxable_income) > annual_taxable_earning:
+				continue
 
+<<<<<<< HEAD
 		tax_amount += tax_amount * flt(d.percent) / 100
+=======
+			if flt(d.max_taxable_income) and flt(d.max_taxable_income) < annual_taxable_earning:
+				continue
+
+			other_taxes_and_charges += tax_amount * flt(d.percent) / 100
+			tax_amount += other_taxes_and_charges
+>>>>>>> dc4e6b17 (feat: add Taxable Income Relief Threshold Limit field to income tax slab)
 
 	return tax_amount
 
