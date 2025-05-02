@@ -2170,6 +2170,8 @@ def get_payroll_payable_account(company, payroll_entry):
 
 
 def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=None, eval_locals=None):
+	from hrms.hr.utils import calculate_tax_with_marginal_relief
+
 	tax_amount = 0
 <<<<<<< HEAD
 	for slab in tax_slab.slabs:
@@ -2205,6 +2207,12 @@ def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=Non
 			elif annual_taxable_earning >= slab.from_amount and annual_taxable_earning >= slab.to_amount:
 				tax_amount += (slab.to_amount - slab.from_amount + 1) * slab.percent_deduction * 0.01
 >>>>>>> dc4e6b17 (feat: add Taxable Income Relief Threshold Limit field to income tax slab)
+
+		tax_with_marginal_relief = calculate_tax_with_marginal_relief(
+			tax_slab, tax_amount, annual_taxable_earning
+		)
+		if tax_with_marginal_relief is not None:
+			tax_amount = tax_with_marginal_relief
 
 		for d in tax_slab.other_taxes_and_charges:
 			if flt(d.min_taxable_income) and flt(d.min_taxable_income) > annual_taxable_earning:
