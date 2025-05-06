@@ -1020,6 +1020,7 @@ class SalarySlip(TransactionBase):
 
 		self.add_structure_components(component_type)
 		self.add_additional_salary_components(component_type)
+
 		if component_type == "earnings":
 			self.add_employee_benefits()
 		else:
