@@ -15,15 +15,4 @@ hrms.patches.v14_0.create_custom_field_in_loan
 hrms.patches.v14_0.update_loan_repayment_repay_from_salary
 hrms.patches.v14_0.update_payroll_frequency_to_none_if_salary_slip_is_based_on_timesheet
 hrms.patches.v14_0.update_title_in_employee_onboarding_and_separation_templates
-<<<<<<< HEAD
-=======
-hrms.patches.v15_0.make_hr_settings_tab_in_company_master
-hrms.patches.v15_0.enable_allow_checkin_setting
-hrms.patches.v15_0.set_default_asset_action_in_fnf
-hrms.patches.v15_0.add_loan_docperms_to_ess #2024-05-14
-hrms.patches.v15_0.migrate_shift_assignment_schedule_to_shift_schedule
-hrms.patches.v15_0.update_payment_status_for_leave_encashment
-hrms.patches.v15_0.create_accounting_dimensions_in_leave_encashment
 hrms.patches.v14_0.create_marginal_relief_field_for_india_localisation
-hrms.patches.v15_0.create_marginal_relief_field_for_india_localisation
->>>>>>> 15075eb9 (chore: patch to add Marginal Relief Field to income tax slab for india)
