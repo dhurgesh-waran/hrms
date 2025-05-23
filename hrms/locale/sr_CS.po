@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-18 21:15\n"
+"PO-Revision-Date: 2025-05-23 22:54\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: Serbian (Latin)\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr ""
 #. Header text in the Overview Workspace
 #: hrms/hr/workspace/overview/overview.json
 msgid "<span class=\"h4\"><b>Reports &amp; Masters</b></span>"
-msgstr ""
+msgstr "<span class=\"h4\"><b>Izveštaji &amp; master podaci</b></span>"
 
 #. Header text in the Salary Payout Workspace
 #: hrms/payroll/workspace/salary_payout/salary_payout.json
@@ -301,7 +301,7 @@ msgstr ""
 #: hrms/payroll/workspace/salary_payout/salary_payout.json
 #: hrms/payroll/workspace/tax_&_benefits/tax_&_benefits.json
 msgid "<span class=\"h4\"><b>Your Shortcuts</b></span>"
-msgstr ""
+msgstr "<span class=\"h4\"><b>Vaše prečice</b></span>"
 
 #. Header text in the Shift & Attendance Workspace
 #: hrms/hr/workspace/shift_&_attendance/shift_&_attendance.json
@@ -3038,7 +3038,7 @@ msgstr "Kupac"
 #. Option for the 'Roster Color' (Select) field in DocType 'Shift Type'
 #: hrms/hr/doctype/shift_type/shift_type.json
 msgid "Cyan"
-msgstr ""
+msgstr "Cijan"
 
 #. Label of the cycle_name (Data) field in DocType 'Appraisal Cycle'
 #: hrms/hr/doctype/appraisal_cycle/appraisal_cycle.json
@@ -5033,17 +5033,17 @@ msgstr ""
 #. Label of a Link in the Performance Workspace
 #: hrms/hr/workspace/performance/performance.json
 msgid "Energy Point Log"
-msgstr ""
+msgstr "Evidencija energetskih poena"
 
 #. Label of a Link in the Performance Workspace
 #: hrms/hr/workspace/performance/performance.json
 msgid "Energy Point Rule"
-msgstr ""
+msgstr "Pravilo energetskih poena"
 
 #. Label of a Link in the Performance Workspace
 #: hrms/hr/workspace/performance/performance.json
 msgid "Energy Point Settings"
-msgstr ""
+msgstr "Podešavanje energetskih poena"
 
 #. Label of a Card Break in the Performance Workspace
 #: hrms/hr/workspace/performance/performance.json
@@ -6085,7 +6085,7 @@ msgstr "Glavna knjiga"
 #: hrms/hr/doctype/employee_checkin/employee_checkin.json
 #: hrms/hr/doctype/shift_location/shift_location.json
 msgid "Geolocation"
-msgstr ""
+msgstr "Geolokacija"
 
 #: hrms/public/js/utils/index.js:186 hrms/public/js/utils/index.js:212
 msgid "Geolocation Error"
@@ -9332,7 +9332,7 @@ msgstr ""
 #. Option for the 'Roster Color' (Select) field in DocType 'Shift Type'
 #: hrms/hr/doctype/shift_type/shift_type.json
 msgid "Orange"
-msgstr ""
+msgstr "Narandžasta"
 
 #: hrms/hr/page/organizational_chart/organizational_chart.js:4
 msgid "Organizational Chart"
@@ -9885,7 +9885,7 @@ msgstr ""
 #. Option for the 'Roster Color' (Select) field in DocType 'Shift Type'
 #: hrms/hr/doctype/shift_type/shift_type.json
 msgid "Pink"
-msgstr ""
+msgstr "Roze"
 
 #. Label of the planned_vacancies (Int) field in DocType 'Job Opening'
 #: hrms/hr/doctype/job_opening/job_opening.json
@@ -10313,7 +10313,7 @@ msgstr ""
 
 #: frontend/src/views/Profile.vue:17
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: hrms/hr/report/project_profitability/project_profitability.py:183
 msgid "Profit"
@@ -13121,7 +13121,7 @@ msgstr "Vreme završetka"
 #. Label of the to_user (Link) field in DocType 'PWA Notification'
 #: hrms/hr/doctype/pwa_notification/pwa_notification.json
 msgid "To User"
-msgstr ""
+msgstr "Za korisnika"
 
 #: hrms/hr/doctype/shift_assignment/shift_assignment.py:104
 msgid "To allow this, enable {0} under {1}."
@@ -14340,7 +14340,7 @@ msgstr "Godišnje"
 #. Option for the 'Roster Color' (Select) field in DocType 'Shift Type'
 #: hrms/hr/doctype/shift_type/shift_type.json
 msgid "Yellow"
-msgstr ""
+msgstr "Žuta"
 
 #. Option for the 'Is Active' (Select) field in DocType 'Salary Structure'
 #. Option for the 'Is Default' (Select) field in DocType 'Salary Structure'
