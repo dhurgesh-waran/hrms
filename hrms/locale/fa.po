@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-17 21:10\n"
+"PO-Revision-Date: 2025-05-25 23:02\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: Persian\n"
 "MIME-Version: 1.0\n"
@@ -2135,7 +2135,7 @@ msgstr "پس از ارسال نمی‌توان تخصیص برای {0} را به
 
 #: hrms/hr/doctype/goal/goal_list.js:101
 msgid "Cannot update status of Goal groups"
-msgstr "نمی‌توان وضعیت گروه های هدف را به روز کرد"
+msgstr "نمی‌توان وضعیت گروه‌های هدف را به روز کرد"
 
 #. Label of the carry_forward (Check) field in DocType 'Leave Control Panel'
 #. Label of the carry_forward_section (Section Break) field in DocType 'Leave
@@ -10813,7 +10813,7 @@ msgstr "ماشین اجاره ای"
 
 #: hrms/hr/doctype/goal/goal.js:66
 msgid "Reopen"
-msgstr "دوباره باز کنید"
+msgstr "باز کردن دوباره"
 
 #: hrms/setup.py:822 hrms/setup.py:831
 msgid "Repay From Salary"
