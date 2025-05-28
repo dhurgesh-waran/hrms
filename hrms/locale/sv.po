@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-20 21:49\n"
+"PO-Revision-Date: 2025-05-28 23:43\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -1425,7 +1425,7 @@ msgstr "Godkännare"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:15
 #: hrms/public/js/salary_slip_deductions_report_filters.js:22
 msgid "Apr"
-msgstr "Godkännare"
+msgstr "Apr"
 
 #: hrms/hr/doctype/goal/goal.js:77
 msgid "Archive"
@@ -1725,7 +1725,7 @@ msgstr "Avgångar"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:19
 #: hrms/public/js/salary_slip_deductions_report_filters.js:26
 msgid "Aug"
-msgstr "Augusti"
+msgstr "Aug"
 
 #. Label of the auto_attendance_settings_section (Section Break) field in
 #. DocType 'Shift Type'
@@ -3220,7 +3220,7 @@ msgstr "Debet Konto Nummer"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:23
 #: hrms/public/js/salary_slip_deductions_report_filters.js:30
 msgid "Dec"
-msgstr "December"
+msgstr "Dec"
 
 #: hrms/hr/report/employee_exits/employee_exits.py:193
 msgid "Decision Pending"
@@ -5611,7 +5611,7 @@ msgstr "Misslyckande Detaljer"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:13
 #: hrms/public/js/salary_slip_deductions_report_filters.js:20
 msgid "Feb"
-msgstr "Februari"
+msgstr "Feb"
 
 #. Label of the feedback_tab (Tab Break) field in DocType 'Appraisal'
 #. Label of the feedback_tab (Tab Break) field in DocType 'Employee Performance
@@ -7423,7 +7423,7 @@ msgstr "Är Skatt Tillämplig"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:12
 #: hrms/public/js/salary_slip_deductions_report_filters.js:19
 msgid "Jan"
-msgstr "Januari"
+msgstr "Jan"
 
 #. Label of the job_applicant (Link) field in DocType 'Appointment Letter'
 #. Label of the job_applicant (Link) field in DocType 'Employee Onboarding'
@@ -8314,7 +8314,7 @@ msgstr "Manuellt Bedömning"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:14
 #: hrms/public/js/salary_slip_deductions_report_filters.js:21
 msgid "Mar"
-msgstr "Mars"
+msgstr "Mar"
 
 #: hrms/hr/doctype/attendance/attendance_list.js:17
 #: hrms/hr/doctype/attendance/attendance_list.js:25
@@ -9126,7 +9126,7 @@ msgstr "Avisera Användare via E-post"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:22
 #: hrms/public/js/salary_slip_deductions_report_filters.js:29
 msgid "Nov"
-msgstr "November"
+msgstr "Nov"
 
 #. Label of the number_of_employees (Int) field in DocType 'Payroll Entry'
 #: hrms/payroll/doctype/payroll_entry/payroll_entry.json
@@ -9172,7 +9172,7 @@ msgstr "Erhållet medel Bedömning"
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:21
 #: hrms/public/js/salary_slip_deductions_report_filters.js:28
 msgid "Oct"
-msgstr "Oktober"
+msgstr "Okt"
 
 #. Label of the odometer_reading (Section Break) field in DocType 'Vehicle Log'
 #: hrms/hr/doctype/vehicle_log/vehicle_log.json
@@ -9858,7 +9858,7 @@ msgstr "Pågående Tillgång Retur"
 
 #: hrms/hr/report/employee_exits/employee_exits.py:227
 msgid "Pending FnF"
-msgstr "Pågående Slutlig Avtal"
+msgstr "Pågående Avtal"
 
 #: hrms/hr/report/employee_exits/employee_exits.py:221
 msgid "Pending Interviews"
