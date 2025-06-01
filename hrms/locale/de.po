@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-05 18:11\n"
+"PO-Revision-Date: 2025-06-01 23:46\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -4842,7 +4842,7 @@ msgstr "Mitarbeiter {0} am {1} nur halbtags anwesend"
 
 #: hrms/payroll/doctype/salary_slip/salary_slip.py:589
 msgid "Employee {0} relieved on {1} must be set as 'Left'"
-msgstr "Am {1} freigestellter Mitarbeiter {0} muss als \"Ausgetreten\" gekennzeichnet werden"
+msgstr "Am {1} freigestellter Mitarbeiter {0} muss als „Entlassen“ gekennzeichnet werden"
 
 #: hrms/payroll/doctype/gratuity/gratuity.py:163
 msgid "Employee: {0} have to complete minimum {1} years for gratuity"
@@ -8102,12 +8102,12 @@ msgstr ""
 #: hrms/hr/report/employee_leave_balance_summary/employee_leave_balance_summary.js:43
 #: hrms/hr/report/leave_ledger/leave_ledger.js:41
 msgid "Left"
-msgstr "Links"
+msgstr "Entlassen"
 
 #: hrms/hr/report/employee_leave_balance/employee_leave_balance.js:47
 msgctxt "Employee"
 msgid "Left"
-msgstr "Links"
+msgstr "Entlassen"
 
 #. Label of the letter_head (Link) field in DocType 'Job Offer'
 #. Label of the letter_head (Link) field in DocType 'Leave Application'
