@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-05 18:11\n"
+"PO-Revision-Date: 2025-06-05 00:07\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: Turkish\n"
 "MIME-Version: 1.0\n"
@@ -2301,7 +2301,7 @@ msgstr "Talepler"
 #: frontend/src/components/ListFiltersActionSheet.vue:76
 #: hrms/www/jobs/index.html:20 hrms/www/jobs/index.html:351
 msgid "Clear All"
-msgstr "Tümünü Temizle"
+msgstr "Temizle"
 
 #. Label of the clearance_date (Date) field in DocType 'Expense Claim'
 #: hrms/hr/doctype/expense_claim/expense_claim.json
