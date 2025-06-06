@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-06-05 00:07\n"
+"PO-Revision-Date: 2025-06-06 00:19\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -1057,7 +1057,7 @@ msgstr "Modifié Depuis"
 #: hrms/payroll/doctype/salary_detail/salary_detail.json
 #: hrms/payroll/report/professional_tax_deductions/professional_tax_deductions.py:32
 msgid "Amount"
-msgstr ""
+msgstr "Montant"
 
 #: hrms/payroll/doctype/salary_structure/salary_structure.py:49
 msgid "Amount Based on Formula"
@@ -1945,7 +1945,7 @@ msgstr ""
 #. Option for the 'Roster Color' (Select) field in DocType 'Shift Type'
 #: hrms/hr/doctype/shift_type/shift_type.json
 msgid "Blue"
-msgstr ""
+msgstr "Bleue"
 
 #. Label of the body_section (Section Break) field in DocType 'Appointment
 #. Letter'
@@ -2062,7 +2062,7 @@ msgstr "Appels"
 
 #: hrms/setup.py:394
 msgid "Campaign"
-msgstr ""
+msgstr "Campagne"
 
 #: frontend/src/components/FileUploaderView.vue:65
 #: frontend/src/components/FormView.vue:235
@@ -2377,7 +2377,7 @@ msgstr "Commentaires"
 
 #: hrms/setup.py:386
 msgid "Commission"
-msgstr ""
+msgstr "Commission"
 
 #. Label of the company (Link) field in DocType 'Appointment Letter'
 #. Label of the company (Link) field in DocType 'Appraisal'
@@ -2575,7 +2575,7 @@ msgstr "Terminé"
 #. Label of the completed_on (Date) field in DocType 'Job Requisition'
 #: hrms/hr/doctype/job_requisition/job_requisition.json
 msgid "Completed On"
-msgstr ""
+msgstr "Terminé le"
 
 #: hrms/hr/doctype/employee_onboarding/employee_onboarding.js:118
 msgid "Completing onboarding"
@@ -3974,7 +3974,7 @@ msgstr "À compter de"
 #: hrms/hr/doctype/employee_referral/employee_referral.json
 #: hrms/payroll/doctype/payroll_settings/payroll_settings.json
 msgid "Email"
-msgstr ""
+msgstr "Courriel"
 
 #. Label of the email_id (Data) field in DocType 'Job Applicant'
 #: hrms/hr/doctype/job_applicant/job_applicant.json
@@ -6576,7 +6576,7 @@ msgstr "La date de la demi-journée doit être comprise entre la date de début 
 #. Type'
 #: hrms/hr/doctype/leave_type/leave_type.json
 msgid "Half-Yearly"
-msgstr ""
+msgstr "Demi-année"
 
 #. Label of the has_certificate (Check) field in DocType 'Training Event'
 #: hrms/hr/doctype/training_event/training_event.json
@@ -9076,7 +9076,7 @@ msgstr "Non Commencé"
 
 #: hrms/payroll/doctype/salary_slip/salary_slip.js:282
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #. Description of the 'Shift' (Link) field in DocType 'Attendance Request'
 #: hrms/hr/doctype/attendance_request/attendance_request.json
@@ -9228,7 +9228,7 @@ msgstr "Permanence"
 #. Option for the 'Status' (Select) field in DocType 'Job Requisition'
 #: hrms/hr/doctype/job_requisition/job_requisition.json
 msgid "On Hold"
-msgstr ""
+msgstr "En attente"
 
 #. Option for the 'Status' (Select) field in DocType 'Attendance'
 #: frontend/src/components/AttendanceCalendar.vue:80
@@ -9450,7 +9450,7 @@ msgstr "Changements de chevauchement"
 #: hrms/payroll/doctype/payroll_entry/payroll_entry.json
 #: hrms/payroll/doctype/salary_component/salary_component.json
 msgid "Overview"
-msgstr ""
+msgstr "Vue d'ensemble"
 
 #. Label of the overwrite_salary_structure_amount (Check) field in DocType
 #. 'Additional Salary'
@@ -14736,7 +14736,7 @@ msgstr ""
 #: hrms/hr/workspace/overview/overview.json
 #: hrms/hr/workspace/recruitment/recruitment.json
 msgid "{} Open"
-msgstr ""
+msgstr "{} Ouvrir"
 
 #. Count format of shortcut in the Employee Lifecycle Workspace
 #. Count format of shortcut in the Expense Claims Workspace
