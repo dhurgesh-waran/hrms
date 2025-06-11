@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: frappe\n"
 "Report-Msgid-Bugs-To: contact@frappe.io\n"
 "POT-Creation-Date: 2025-05-04 09:34+0000\n"
-"PO-Revision-Date: 2025-05-28 23:43\n"
+"PO-Revision-Date: 2025-06-11 02:03\n"
 "Last-Translator: contact@frappe.io\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -10203,12 +10203,12 @@ msgstr "Datum"
 #: hrms/payroll/report/income_tax_deductions/income_tax_deductions.py:60
 #: hrms/www/jobs/index.html:95
 msgid "Posting Date"
-msgstr "Bokföring Datum"
+msgstr "Registrering Datum"
 
 #. Label of the posting_date (Date) field in DocType 'Gratuity'
 #: hrms/payroll/doctype/gratuity/gratuity.json
 msgid "Posting date"
-msgstr "Bokföring Datum"
+msgstr "Registrering Datum"
 
 #. Label of the preferred_area_for_lodging (Data) field in DocType 'Travel
 #. Itinerary'
