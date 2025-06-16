@@ -26,7 +26,6 @@ class EmployeeAdvance(Document):
 
 	def validate(self):
 		validate_active_employee(self.employee)
-		self.validate_exchange_rate()
 		self.set_status()
 		self.set_pending_amount()
 
@@ -45,14 +44,6 @@ class EmployeeAdvance(Document):
 					title=_("Missing Advance Account"),
 				)
 
-<<<<<<< HEAD
-	def validate(self):
-		validate_active_employee(self.employee)
-		self.set_status()
-		self.set_pending_amount()
-
-=======
->>>>>>> 0ed63738 (chore: move employee advance accoutn validation to before submit hook)
 	def on_cancel(self):
 		self.ignore_linked_doctypes = ("GL Entry", "Payment Ledger Entry")
 		self.set_status(update=True)
